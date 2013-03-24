@@ -6,11 +6,11 @@
 // Includes Atmel CMSIS
 #include <chip.h>
 
-#define SUPC_KEY   			0xA5u
-#define RESET_VALUE			0x01210720
+#define SUPC_KEY   	0xA5u
+#define RESET_VALUE	0x01210720
 
-#define RC							0
-#define	XTAL						1
+#define RC		0
+#define	XTAL		1
 
 // Unixtimeseconds from 1. Januar 1970  00:00:00 to 1. Januar 2000   00:00:00 UTC-0
 #define SECONDS_FROM_1970_TO_2000 946684800
@@ -57,6 +57,14 @@ class RTC_clock
 		int switch_years (uint16_t year);
 		int summertime ();
 		int timing ();
+
+		//making these four public allows for saving/loading the raw
+		//value from outside the class.
+		uint32_t change_time (uint32_t _now);
+		uint32_t change_date (uint32_t _now);
+		uint32_t current_time ();
+		uint32_t current_date ();
+
 		
 	private:
 		int _source;
@@ -67,12 +75,8 @@ class RTC_clock
 		int _month;
 		uint16_t _year;
 		int _day_of_week;
-		uint32_t current_time ();
-		uint32_t current_date ();
 		uint32_t _current_time;
 		uint32_t _current_date;
-		uint32_t change_time (uint32_t _now);
-		uint32_t change_date (uint32_t _now);
 		uint32_t _now;
 		uint32_t _changed;
 };
